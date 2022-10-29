@@ -23,7 +23,5 @@ RUN set -ex \
     && chmod +x /usr/bin/caddy \
     && chmod +x /usr/bin/entrypoint.sh \
     && chmod +x /usr/bin/xray 
-
-ENV PORT
 	
 CMD /usr/bin/entrypoint.sh	
