@@ -1,7 +1,6 @@
 FROM golang:alpine AS caddy
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest && \
-    xcaddy build latest
-RUN --mount=type=cache,target=/root/.cache/go-build \	
+    xcaddy build latest && \
     git clone --progress https://github.com/XTLS/Xray-core.git . && \
     CGO_ENABLED=0 go build -o /tmp/xray -trimpath -ldflags "-s -w -buildid=" ./main
 
