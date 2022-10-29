@@ -1,9 +1,10 @@
 FROM golang:alpine AS caddy
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest && \
     xcaddy build latest && \
+    apk add --no-cache git && \
     git clone --progress https://github.com/XTLS/Xray-core.git . && \
+    cd XTLS/Xray-core && \
     CGO_ENABLED=0 go build -o /tmp/xray -trimpath -ldflags "-s -w -buildid=" ./main
-
 
 FROM alpine:latest
 
