@@ -5,7 +5,6 @@ AUUID="7bf357e0-5f10-4afb-a2e5-bc0cee0fc6de"
 # CADDYIndexPage="https://github.com/AYJCSGM/mikutap/archive/master.zip"
 CADDYIndexPage="https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html"
 ParameterSSENCYPT="chacha20-ietf-poly1305"
-PORT=
 
 # configs
 mkdir -p /etc/caddy/ /usr/share/caddy && echo -e "User-agent: *\nDisallow: /" >/usr/share/caddy/robots.txt
