@@ -1,17 +1,21 @@
 FROM golang:alpine AS caddy
 RUN go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest && \
-    xcaddy build latest && \
-    apk add --no-cache git && \
-    git clone --progress https://github.com/XTLS/Xray-core.git . && \
-    cd Xray-core && \
+    xcaddy build latest
+
+FROM golang:alpine AS xray
+RUN apk update && apk add --no-cache git
+WORKDIR /go/src/xray/core
+RUN git clone --progress https://github.com/XTLS/Xray-core.git . && \
+    go mod download && \
     CGO_ENABLED=0 go build -o /tmp/xray -trimpath -ldflags "-s -w -buildid=" ./main
+
 
 FROM alpine:latest
 
 COPY conf /conf/
 COPY entrypoint.sh /usr/bin
 COPY --from=caddy /go/caddy /usr/bin
-COPY --from=caddy /tmp/xray /usr/bin
+COPY --from=xray /tmp/xray /usr/bin
 
 
 RUN set -ex \
